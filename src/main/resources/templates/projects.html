@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Projects</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out">
+	</form>
+	<!-- <h3 th:inline="text">Logged in as
+		[[${#httpServletRequest.remoteUser}]]!</h3> -->
+
+	<ul th:each="project: ${projects}">
+		<li>
+			<div>
+				[[${project.name}]] <a th:href="|/project/${project.name}|">Modify</a>
+			</div>
+		</li>
+	</ul>
+</body>
+</html>

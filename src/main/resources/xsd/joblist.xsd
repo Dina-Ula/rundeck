@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+	<xs:element name="joblist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" name="job">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" name="context">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="options">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element maxOccurs="unbounded" name="option">
+														<xs:complexType>
+															<xs:sequence minOccurs="0">
+																<xs:element name="description" type="xs:string" />
+															</xs:sequence>
+															<xs:attribute name="enforcedvalues" type="xs:boolean" use="optional" />
+															<xs:attribute name="name" type="xs:string" use="required" />
+															<xs:attribute name="required" type="xs:boolean" use="optional" />
+															<xs:attribute name="value" type="xs:string" use="optional" />
+															<xs:attribute name="valuesUrl" type="xs:string" use="optional" />
+															<xs:attribute name="values" type="xs:string" use="optional" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="preserveOrder" type="xs:boolean" use="required" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="description" type="xs:string" />
+							<xs:element name="executionEnabled" type="xs:boolean" />
+							<xs:element name="group" type="xs:string" />
+							<xs:element name="id" type="xs:string" />
+							<xs:element name="loglevel" type="xs:string" />
+							<xs:element minOccurs="0" name="multipleExecutions" type="xs:boolean" />
+							<xs:element name="name" type="xs:string" />
+							<xs:element name="nodeFilterEditable" type="xs:boolean" />
+							<xs:element minOccurs="0" name="schedule">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="month">
+											<xs:complexType>
+												<xs:attribute name="month" type="xs:string" use="required" />
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="time">
+											<xs:complexType>
+												<xs:attribute name="hour" type="xs:unsignedByte" use="required" />
+												<xs:attribute name="minute" type="xs:unsignedByte" use="required" />
+												<xs:attribute name="seconds" type="xs:unsignedByte" use="required" />
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="weekday">
+											<xs:complexType>
+												<xs:attribute name="day" type="xs:string" use="required" />
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="year">
+											<xs:complexType>
+												<xs:attribute name="year" type="xs:string" use="required" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element minOccurs="0" name="notification">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="onfailure">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="plugin">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="configuration">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element maxOccurs="unbounded" name="entry">
+																				<xs:complexType>
+																					<xs:attribute name="key" type="xs:string" use="required" />
+																					<xs:attribute name="value" type="xs:string" use="required" />
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="type" type="xs:string" use="required" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="onsuccess">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="plugin">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="configuration">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element maxOccurs="unbounded" name="entry">
+																				<xs:complexType>
+																					<xs:attribute name="key" type="xs:string" use="required" />
+																					<xs:attribute name="value" type="xs:string" use="required" />
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="type" type="xs:string" use="required" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="scheduleEnabled" type="xs:boolean" />
+							<xs:element name="sequence">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="command">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element minOccurs="0" name="jobref">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="arg">
+																	<xs:complexType>
+																		<xs:attribute name="line" type="xs:string" use="required" />
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="group" type="xs:string" use="required" />
+															<xs:attribute name="name" type="xs:string" use="required" />
+															<xs:attribute name="nodeStep" type="xs:boolean" use="required" />
+														</xs:complexType>
+													</xs:element>
+													<xs:element minOccurs="0" name="script" type="xs:string" />
+													<xs:element minOccurs="0" name="scriptargs" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="keepgoing" type="xs:boolean" use="required" />
+									<xs:attribute name="strategy" type="xs:string" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element minOccurs="0" name="timeout" type="xs:string" />
+							<xs:element name="uuid" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- <xs:simpleType name="CDATA">
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<jaxb:javaType name="java.lang.String" xmlType="CDATA"
+					parseMethod="com.hbg.rundeck.job.adapter.CDataAdapter.parse"
+					printMethod="com.hbg.rundeck.job.adapter.CDataAdapter.print" />
+			</jaxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation> -->
+</xs:schema>

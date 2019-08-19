@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Project</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<script src="/js/jquery-3.4.1.js"></script>
+<script src="/js/custom.js"></script>
+<link rel="stylesheet" href="/css/custom.css">
+<body>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" th:value="@{Sign out}">
+	</form>
+
+	<!-- <div th:inline="text">Logged in as [[${#httpServletRequest.remoteUser}]]</div> -->
+	<div th:inline="text">
+	<h4>
+		Modify: [[${projectId}]] <a th:href="@{/projects}">List Projects</a>
+	</h4>
+	</div><br />
+
+	<form id="editJob" th:action="@{/project/}+${projectId}" method="post">
+		<div id="selection_holder">
+		Choose the element to edit:
+			<select id="0" name="0" class="ecx_select">
+				<option></option>
+				<option th:each="element : ${elements}" th:value="${element}"
+					th:text="${element}" />
+			</select>
+		</div>
+		<br />
+		<div id="data_holder">
+			<label for="data_id">
+				<span>Id</span>
+				<input id="data_id" type="text" name="data_id" /> 
+			</label>
+			<label for="data">
+				<span>Value</span>
+				<textarea id="data" name="data"></textarea>
+			</label>
+		</div>
+		<br/>
+		<label for="submit">
+			<input type="submit" id="submit" value="Edit Job" />
+		</label>
+	</form>
+</body>
+</html>

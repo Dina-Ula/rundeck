@@ -1,0 +1,52 @@
+server:
+   port: 8081
+spring:
+   application:
+      name: Rundeck Client
+rundeck:
+   authentication:
+      username: j_username
+      password: j_password
+      endpoint: https://rundeck.hotelbeds.com/j_security_check
+      successURL: https://rundeck.hotelbeds.com/
+   job:
+      all: https://rundeck.hotelbeds.com/api/1/projects?format=json
+      any: https://rundeck.hotelbeds.com/api/14/project/{0}/jobs/export
+      edit: https://rundeck.hotelbeds.com/api/14/project/{0}/jobs/import?dupeOption=update
+   elements:
+      job:
+      - context
+      - description
+      - executionEnabled
+      - group
+      - id
+      - loglevel
+      - multipleExecutions
+      - name
+      - nodeFilterEditable
+      - notification
+      - scheduleEnabled
+      - sequence
+      - timeout
+      - uuid
+      context:
+      - options
+      options:
+      - option
+      option:
+      - name
+      - value
+      - values
+      - valuesUrl
+      - enforcedvalues
+      - regex
+      - description
+      - required
+      - multivalued
+      - delimiter
+      - multivalueAllSelected
+      - secure
+      - valueExposed
+      - storagePath
+      - isDate
+      - dateFormat

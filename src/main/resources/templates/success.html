@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Success</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out">
+	</form>
+	<div>
+		<h4>
+			<span> <label> Rundeck Job Modified </label> <a
+				th:href="@{/projects}">List Projects</a>
+			</span>
+		</h4>
+	</div>
+</body>
+</html>
