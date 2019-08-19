@@ -1,75 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	jxb:version="2.1">
 	<xs:element name="joblist">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element maxOccurs="unbounded" name="job">
+				<xs:element name="job" maxOccurs="unbounded" minOccurs="0">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element minOccurs="0" name="context">
+							<xs:element name="context">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="options">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element maxOccurs="unbounded" name="option">
-														<xs:complexType>
-															<xs:sequence minOccurs="0">
-																<xs:element name="description" type="xs:string" />
+													<xs:element name="option" maxOccurs="unbounded" minOccurs="0">
+														<xs:complexType mixed="true">
+															<xs:sequence>
+																<xs:element type="xs:string" name="description" minOccurs="0" />
 															</xs:sequence>
-															<xs:attribute name="enforcedvalues" type="xs:boolean" use="optional" />
-															<xs:attribute name="name" type="xs:string" use="required" />
-															<xs:attribute name="required" type="xs:boolean" use="optional" />
-															<xs:attribute name="value" type="xs:string" use="optional" />
-															<xs:attribute name="valuesUrl" type="xs:string" use="optional" />
-															<xs:attribute name="values" type="xs:string" use="optional" />
+															<xs:attribute type="xs:string" name="enforcedvalues" use="optional" />
+															<xs:attribute type="xs:string" name="name" use="optional" />
+															<xs:attribute type="xs:string" name="required" use="optional" />
+															<xs:attribute type="xs:string" name="value" use="optional" />
+															<xs:attribute type="xs:string" name="values" use="optional" />
+															<xs:attribute type="xs:anyURI" name="valuesUrl" use="optional" />
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>
-												<xs:attribute name="preserveOrder" type="xs:boolean" use="required" />
+												<xs:attribute type="xs:string" name="preserveOrder" use="optional" />
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="description" type="xs:string" />
-							<xs:element name="executionEnabled" type="xs:boolean" />
-							<xs:element name="group" type="xs:string" />
-							<xs:element name="id" type="xs:string" />
-							<xs:element name="loglevel" type="xs:string" />
-							<xs:element minOccurs="0" name="multipleExecutions" type="xs:boolean" />
-							<xs:element name="name" type="xs:string" />
-							<xs:element name="nodeFilterEditable" type="xs:boolean" />
-							<xs:element minOccurs="0" name="schedule">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="month">
-											<xs:complexType>
-												<xs:attribute name="month" type="xs:string" use="required" />
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="time">
-											<xs:complexType>
-												<xs:attribute name="hour" type="xs:unsignedByte" use="required" />
-												<xs:attribute name="minute" type="xs:unsignedByte" use="required" />
-												<xs:attribute name="seconds" type="xs:unsignedByte" use="required" />
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="weekday">
-											<xs:complexType>
-												<xs:attribute name="day" type="xs:string" use="required" />
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="year">
-											<xs:complexType>
-												<xs:attribute name="year" type="xs:string" use="required" />
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element>
-							<xs:element minOccurs="0" name="notification">
+							<xs:element type="xs:string" name="description" />
+							<xs:element type="xs:string" name="executionEnabled" />
+							<xs:element type="xs:string" name="group" />
+							<xs:element type="xs:string" name="id" />
+							<xs:element type="xs:string" name="loglevel" />
+							<xs:element type="xs:string" name="multipleExecutions" minOccurs="0" />
+							<xs:element type="xs:string" name="name" />
+							<xs:element type="xs:string" name="nodeFilterEditable" />
+							<xs:element name="notification" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="onfailure">
@@ -81,17 +53,62 @@
 																<xs:element name="configuration">
 																	<xs:complexType>
 																		<xs:sequence>
-																			<xs:element maxOccurs="unbounded" name="entry">
+																			<xs:element name="entry" maxOccurs="unbounded" minOccurs="0">
 																				<xs:complexType>
-																					<xs:attribute name="key" type="xs:string" use="required" />
-																					<xs:attribute name="value" type="xs:string" use="required" />
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute type="xs:string" name="key" use="optional" />
+																							<xs:attribute type="xs:string" name="value" use="optional">
+																								<xs:annotation>
+																									<xs:appinfo>
+																										<jxb:property name="valueAttribute" />
+																									</xs:appinfo>
+																								</xs:annotation>
+																							</xs:attribute>
+																						</xs:extension>
+																					</xs:simpleContent>
 																				</xs:complexType>
 																			</xs:element>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
 															</xs:sequence>
-															<xs:attribute name="type" type="xs:string" use="required" />
+															<xs:attribute type="xs:string" name="type" use="optional" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="onstart" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="plugin">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="configuration">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="entry" maxOccurs="unbounded" minOccurs="0">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute type="xs:string" name="key" use="optional" />
+																							<xs:attribute type="xs:string" name="value" use="optional">
+																								<xs:annotation>
+																									<xs:appinfo>
+																										<jxb:property name="valueAttribute" />
+																									</xs:appinfo>
+																								</xs:annotation>
+																							</xs:attribute>
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute type="xs:string" name="type" />
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>
@@ -106,17 +123,27 @@
 																<xs:element name="configuration">
 																	<xs:complexType>
 																		<xs:sequence>
-																			<xs:element maxOccurs="unbounded" name="entry">
+																			<xs:element name="entry" maxOccurs="unbounded" minOccurs="0">
 																				<xs:complexType>
-																					<xs:attribute name="key" type="xs:string" use="required" />
-																					<xs:attribute name="value" type="xs:string" use="required" />
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute type="xs:string" name="key" use="optional" />
+																							<xs:attribute type="xs:string" name="value" use="optional">
+																								<xs:annotation>
+																									<xs:appinfo>
+																										<jxb:property name="valueAttribute" />
+																									</xs:appinfo>
+																								</xs:annotation>
+																							</xs:attribute>
+																						</xs:extension>
+																					</xs:simpleContent>
 																				</xs:complexType>
 																			</xs:element>
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
 															</xs:sequence>
-															<xs:attribute name="type" type="xs:string" use="required" />
+															<xs:attribute type="xs:string" name="type" use="optional" />
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>
@@ -125,55 +152,93 @@
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="scheduleEnabled" type="xs:boolean" />
+							<xs:element name="schedule" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="dayofmonth" minOccurs="0" />
+										<xs:element name="month">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute type="xs:string" name="month" use="optional" />
+														<xs:attribute type="xs:string" name="day" use="optional" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="time">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute type="xs:string" name="hour" use="optional" />
+														<xs:attribute type="xs:string" name="minute" use="optional" />
+														<xs:attribute type="xs:string" name="seconds" use="optional" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="weekday" minOccurs="0">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute type="xs:string" name="day" use="optional" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="year">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute type="xs:string" name="year" use="optional" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element type="xs:string" name="scheduleEnabled" />
 							<xs:element name="sequence">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="command">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element minOccurs="0" name="jobref">
+													<xs:element name="jobref" minOccurs="0">
 														<xs:complexType>
 															<xs:sequence>
 																<xs:element name="arg">
 																	<xs:complexType>
-																		<xs:attribute name="line" type="xs:string" use="required" />
+																		<xs:simpleContent>
+																			<xs:extension base="xs:string">
+																				<xs:attribute type="xs:string" name="line" use="optional" />
+																			</xs:extension>
+																		</xs:simpleContent>
 																	</xs:complexType>
 																</xs:element>
 															</xs:sequence>
-															<xs:attribute name="group" type="xs:string" use="required" />
-															<xs:attribute name="name" type="xs:string" use="required" />
-															<xs:attribute name="nodeStep" type="xs:boolean" use="required" />
+															<xs:attribute type="xs:string" name="group" use="optional" />
+															<xs:attribute type="xs:string" name="name" use="optional" />
+															<xs:attribute type="xs:string" name="nodeStep" use="optional" />
 														</xs:complexType>
 													</xs:element>
-													<xs:element minOccurs="0" name="script" type="xs:string" />
-													<xs:element minOccurs="0" name="scriptargs" />
+													<xs:element type="xs:string" name="script" minOccurs="0" />
+													<xs:element type="xs:string" name="scriptargs" minOccurs="0" />
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
-									<xs:attribute name="keepgoing" type="xs:boolean" use="required" />
-									<xs:attribute name="strategy" type="xs:string" use="required" />
+									<xs:attribute type="xs:string" name="keepgoing" use="optional" />
+									<xs:attribute type="xs:string" name="strategy" use="optional" />
 								</xs:complexType>
 							</xs:element>
-							<xs:element minOccurs="0" name="timeout" type="xs:string" />
-							<xs:element name="uuid" type="xs:string" />
+							<xs:element type="xs:string" name="timeout" minOccurs="0" />
+							<xs:element type="xs:string" name="uuid" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<!-- <xs:simpleType name="CDATA">
-		<xs:restriction base="xs:string"></xs:restriction>
-	</xs:simpleType>
-	<xs:annotation>
-		<xs:appinfo>
-			<jaxb:globalBindings>
-				<jaxb:javaType name="java.lang.String" xmlType="CDATA"
-					parseMethod="com.hbg.rundeck.job.adapter.CDataAdapter.parse"
-					printMethod="com.hbg.rundeck.job.adapter.CDataAdapter.print" />
-			</jaxb:globalBindings>
-		</xs:appinfo>
-	</xs:annotation> -->
 </xs:schema>

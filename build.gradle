@@ -79,6 +79,12 @@ task jaxb {
 			package: 'com.hbg.rundeck.job',
 			schema: 'src/main/resources/xsd/joblist.xsd'
         )
+        
+        ant.xjc(
+			destdir: '${jaxbTargetDir}',
+			package: 'com.hbg.rundeck.result',
+			schema: 'src/main/resources/xsd/result.xsd'
+        )
     }
 }
 

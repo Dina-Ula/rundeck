@@ -13,40 +13,58 @@ rundeck:
       all: https://rundeck.hotelbeds.com/api/1/projects?format=json
       any: https://rundeck.hotelbeds.com/api/14/project/{0}/jobs/export
       edit: https://rundeck.hotelbeds.com/api/14/project/{0}/jobs/import?dupeOption=update
+   elementTypeBoolean:
+   - enforcedvalues
+   - required
+   - scheduleEnabled
+   - nodeFilterEditable
+   - executionEnabled
+   - multipleExecutions
+   - preserveOrder
+   elementTypeList:
+   - option
+   elementsToIdentify:
+      job: id
+      option: name
+   elementsToUpdate:
+      job:
+      - id
+      - name
+      - uuid
+      - description
+      option:
+      - name
+      - enforcedvalues
+      - required
+      - value
+      - values
+      - valuesUrl
+   elementsToAdd:
+      job:
+      - executionEnabled
+      - loglevel
+      - nodeFilterEditable
+      - multipleExecutions
+      - scheduleEnabled
+      - timeout
+      options:
+      - preserveOrder
+      option:
+      - name
+      - enforcedvalues
+      - required
+      - value
+      - values
+      - valuesUrl
+   elementsToRemove:
+      option:
+      - name
    elements:
       job:
       - context
-      - description
-      - executionEnabled
-      - group
-      - id
-      - loglevel
-      - multipleExecutions
-      - name
-      - nodeFilterEditable
       - notification
-      - scheduleEnabled
       - sequence
-      - timeout
-      - uuid
       context:
       - options
       options:
       - option
-      option:
-      - name
-      - value
-      - values
-      - valuesUrl
-      - enforcedvalues
-      - regex
-      - description
-      - required
-      - multivalued
-      - delimiter
-      - multivalueAllSelected
-      - secure
-      - valueExposed
-      - storagePath
-      - isDate
-      - dateFormat

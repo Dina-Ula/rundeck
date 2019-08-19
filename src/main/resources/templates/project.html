@@ -11,37 +11,90 @@
 	<form th:action="@{/logout}" method="post">
 		<input type="submit" th:value="@{Sign out}">
 	</form>
-
-	<!-- <div th:inline="text">Logged in as [[${#httpServletRequest.remoteUser}]]</div> -->
+	<!--/* <div th:inline="text">Logged in as [[${#httpServletRequest.remoteUser}]]</div> */-->
 	<div th:inline="text">
-	<h4>
-		Modify: [[${projectId}]] <a th:href="@{/projects}">List Projects</a>
-	</h4>
-	</div><br />
-
+		<h4>
+			Modify: [[${projectId}]]
+			<a th:href="@{/projects}">List Projects</a>
+		</h4>
+	</div>
+	<br />
 	<form id="editJob" th:action="@{/project/}+${projectId}" method="post">
-		<div id="selection_holder">
-		Choose the element to edit:
-			<select id="0" name="0" class="ecx_select">
+		<div id="operation_holder">
+			<label for="operation_add">
+				<span>Add</span>
+				<input type="radio" class="ecx_operation_holder" id="add_operation" name="operation" value="add" />
+			</label>
+			<label for="operation_update">
+				<span>Update</span>
+				<input type="radio" class="ecx_operation_holder" id="update_operation" name="operation" value="update" />
+			</label>
+			<label for="operation_remove">
+				<span>Remove</span>
+				<input type="radio" class="ecx_operation_holder" id="remove_operation" name="operation" value="remove" />
+			</label>
+			<label for="operation_reorder">
+				<span>Reorder Options</span>
+				<input type="radio" class="ecx_operation_holder" id="reorder_operation" name="operation" value="reorder" />
+			</label>
+		</div>
+		<br />
+
+		<!--/* Start - Reorder Segment */-->
+		<div id="reorder_options_holder" style="display: none;">
+			<div id="ecx_dynamic_options"></div>
+			<input type="button" value="Add More option" class="ecx_add_options" />
+		</div>
+		<br />
+		<!--/* End - Reorder Segment */-->
+
+		<div id="selection_holder" style="display: none;">
+			<label for="choose_element">
+				<span>Choose the element</span>
+			</label>
+			<select id="select-0" class="ecx_dynamic_select">
 				<option></option>
-				<option th:each="element : ${elements}" th:value="${element}"
-					th:text="${element}" />
+				<option th:each="element : ${elements}" th:value="${element}" th:text="${element}" />
 			</select>
 		</div>
 		<br />
-		<div id="data_holder">
-			<label for="data_id">
-				<span>Id</span>
-				<input id="data_id" type="text" name="data_id" /> 
+
+		<!--/* Start - Add Segment */-->
+		<div id="add_element_holder" style="display: none;"></div>
+		<br />
+		<!--/* Start - Add Segment */-->
+
+		<!--/* Start - Add Segment */-->
+		<div id="remove_element_holder" style="display: none;"></div>
+		<br />
+		<!--/* Start - Add Segment */-->
+
+		<!--/* Start - Modify Segment */-->
+		<div id="update_element_holder" style="display: none;">
+			<label for="update_id">
+				<span>Element to identify</span>
+				<select id="update_id_select" class="ecx_update_id_select">
+				</select>
 			</label>
-			<label for="data">
+			<label for="update_id_value">
 				<span>Value</span>
-				<textarea id="data" name="data"></textarea>
+				<input id="update_id_value" type="text" name="update-id-" />
+			</label>
+			<label for="update_target">
+				<span>Element to update</span>
+				<select id="update_target_select" class="ecx_update_target_select">
+				</select>
+			</label>
+			<label for="update_target_value">
+				<span>Value</span>
+				<input id="update_target_value" type="text" name="update-target-" />
 			</label>
 		</div>
-		<br/>
+		<br />
+		<!--/* Start - Modify Segment */-->
+
 		<label for="submit">
-			<input type="submit" id="submit" value="Edit Job" />
+			<input type="submit" id="ecx_submit" value="Edit Job" style="display: none;" />
 		</label>
 	</form>
 </body>

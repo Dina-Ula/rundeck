@@ -24,5 +24,13 @@ import lombok.Data;
 public class RundeckConfiguration {
 	private Job job;
 	private Authentication authentication;
+
 	private Map<String, List<String>> elements;
+	private Map<String, List<String>> elementsToAdd;
+	private Map<String, List<String>> elementsToRemove;
+	private Map<String, List<String>> elementsToIdentify;
+	private Map<String, List<String>> elementsToUpdate;
+
+	private List<String> elementTypeBoolean;
+	private List<String> elementTypeList;
 }
