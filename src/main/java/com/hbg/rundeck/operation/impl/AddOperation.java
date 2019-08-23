@@ -33,6 +33,7 @@ public class AddOperation implements Operation {
 	private static final String SIZE = "size";
 	private static final String SELECT_PREFIX = "select-";
 	private static final String ADD_ELEMENT_PREFIX = "add-element-";
+	private static final String REGEX_ELEMENT_PREFIX = "regex-element-";
 
 	@Autowired
 	private JobService service;
@@ -66,6 +67,17 @@ public class AddOperation implements Operation {
 			}
 		}
 
+		String regexElementId = StringUtils.EMPTY;
+		String regex = StringUtils.EMPTY;
+		for (Map.Entry<String, String> entry : requestBody.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+			if (key.contains(REGEX_ELEMENT_PREFIX) && StringUtils.isNotBlank(value)) {
+				regexElementId = key.replace(REGEX_ELEMENT_PREFIX, StringUtils.EMPTY);
+				regex = value;
+			}
+		}
+
 		if (CollectionUtils.isEmpty(addElements)) {
 			return null;
 		}
@@ -74,8 +86,15 @@ public class AddOperation implements Operation {
 
 		List<Job> jobs = joblist.getJob();
 		for (Job job : jobs) {
-
 			try {
+				String elementValue = operationHelper.getElementValueAsString(job, regexElementId);
+
+				boolean matches = elementValue.matches(regex);
+
+				if (matches) {
+					System.out.println("Ignoring: Job Id: " + job.getId() + "Job Name: " + job.getName());
+					continue;
+				}
 
 				Object elementToModify = job;
 				if (!CollectionUtils.isEmpty(selectedElements)) {
@@ -86,7 +105,6 @@ public class AddOperation implements Operation {
 				addElement(elementToModify, addElements);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 					| NoSuchMethodException | SecurityException | InstantiationException e) {
-
 				System.out.println("The element failed to add for the job, " + job.getName());
 				e.printStackTrace();
 				return null;

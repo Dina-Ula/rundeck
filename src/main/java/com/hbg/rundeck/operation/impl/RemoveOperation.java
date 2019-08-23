@@ -31,6 +31,7 @@ public class RemoveOperation implements Operation {
 	private static final String SIZE = "size";
 	private static final String REMOVE = "remove";
 	private static final String SELECT_PREFIX = "select-";
+	private static final String REGEX_ELEMENT_PREFIX = "regex-element-";
 	private static final String REMOVE_ELEMENT_PREFIX = "remove-element-";
 
 	@Autowired
@@ -63,6 +64,17 @@ public class RemoveOperation implements Operation {
 			}
 		}
 
+		String regexElementId = StringUtils.EMPTY;
+		String regex = StringUtils.EMPTY;
+		for (Map.Entry<String, String> entry : requestBody.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+			if (key.contains(REGEX_ELEMENT_PREFIX) && StringUtils.isNotBlank(value)) {
+				regexElementId = key.replace(REGEX_ELEMENT_PREFIX, StringUtils.EMPTY);
+				regex = value;
+			}
+		}
+
 		if (CollectionUtils.isEmpty(removeElement)) {
 			return null;
 		}
@@ -72,6 +84,14 @@ public class RemoveOperation implements Operation {
 		List<Job> jobs = joblist.getJob();
 		for (Job job : jobs) {
 			try {
+				String elementValue = operationHelper.getElementValueAsString(job, regexElementId);
+
+				boolean matches = elementValue.matches(regex);
+
+				if (matches) {
+					System.out.println("Ignoring: Job Id: " + job.getId() + "Job Name: " + job.getName());
+					continue;
+				}
 
 				Object element = job;
 				if (!CollectionUtils.isEmpty(selectedElements)) {

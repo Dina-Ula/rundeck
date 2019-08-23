@@ -28,8 +28,9 @@ public class RundeckConfiguration {
 	private Map<String, List<String>> elements;
 	private Map<String, List<String>> elementsToAdd;
 	private Map<String, List<String>> elementsToRemove;
-	private Map<String, List<String>> elementsToIdentify;
 	private Map<String, List<String>> elementsToUpdate;
+	private Map<String, List<String>> elementsToIgnore;
+	private Map<String, List<String>> elementsToIdentify;
 
 	private List<String> elementTypeBoolean;
 	private List<String> elementTypeList;

@@ -51,3 +51,8 @@ body, ul, li {
 a {
 	float: right;
 }
+
+.ecx_error {
+	color: red;
+	text-align: center;
+}

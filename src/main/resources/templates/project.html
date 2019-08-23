@@ -17,6 +17,7 @@
 			Modify: [[${projectId}]]
 			<a th:href="@{/projects}">List Projects</a>
 		</h4>
+		<h3 class="ecx_error">[[${status}]]</h3>
 	</div>
 	<br />
 	<form id="editJob" th:action="@{/project/}+${projectId}" method="post">
@@ -39,14 +40,6 @@
 			</label>
 		</div>
 		<br />
-
-		<!--/* Start - Reorder Segment */-->
-		<div id="reorder_options_holder" style="display: none;">
-			<div id="ecx_dynamic_options"></div>
-			<input type="button" value="Add More option" class="ecx_add_options" />
-		</div>
-		<br />
-		<!--/* End - Reorder Segment */-->
 
 		<div id="selection_holder" style="display: none;">
 			<label for="choose_element">
@@ -92,6 +85,25 @@
 		</div>
 		<br />
 		<!--/* Start - Modify Segment */-->
+
+		<!--/* Start - Reorder Segment */-->
+		<div id="reorder_options_holder" style="display: none;">
+			<div id="ecx_dynamic_options"></div>
+			<input type="button" value="Add More option" class="ecx_add_options" />
+		</div>
+		<br />
+		<!--/* End - Reorder Segment */-->
+
+		<!-- Start - Regex Segement -->
+		<div id="regex_element_holder" style="display: none;">
+			<label for="ignore_job">
+				<span>Ignore Job: (Regex Pattern)</span>
+			</label>
+			<select id="regex_select" class="ecx_regex_select"></select>
+			<input id="regex_value" type="text" name="regex-element-" />
+		</div>
+		<br />
+		<!-- End - Regex Segement -->
 
 		<label for="submit">
 			<input type="submit" id="ecx_submit" value="Edit Job" style="display: none;" />

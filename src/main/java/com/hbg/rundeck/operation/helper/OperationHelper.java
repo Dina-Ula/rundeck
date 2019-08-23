@@ -22,7 +22,6 @@ public class OperationHelper {
 
 	public Object getElement(Object element, List<String> pSelectedElements) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-
 		for (String entry : pSelectedElements) {
 			element = element.getClass().getMethod(GET + StringUtils.capitalize(entry)).invoke(element);
 		}
@@ -44,5 +43,16 @@ public class OperationHelper {
 			Object newValue = element.getClass().getMethod(GET + StringUtils.capitalize(key)).invoke(element);
 			System.out.println("The existing value of " + key + " is, " + newValue);
 		}
+	}
+
+	public String getElementValueAsString(Object element, String id) throws IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		if (StringUtils.isEmpty(id)) {
+			return StringUtils.EMPTY;
+		}
+
+		String value = (String) element.getClass().getMethod(GET + StringUtils.capitalize(id)).invoke(element);
+
+		return value;
 	}
 }

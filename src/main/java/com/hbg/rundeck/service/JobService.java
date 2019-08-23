@@ -53,12 +53,16 @@ public class JobService {
 		return rundeckConfiguration.getElementsToRemove();
 	}
 
-	public Map<String, List<String>> getAllElementsToIdentify() {
-		return rundeckConfiguration.getElementsToIdentify();
-	}
-
 	public Map<String, List<String>> getAllElementsToUpdate() {
 		return rundeckConfiguration.getElementsToUpdate();
+	}
+	
+	public Map<String, List<String>> getAllElementsToIgnore() {
+		return rundeckConfiguration.getElementsToIgnore();
+	}
+	
+	public Map<String, List<String>> getAllElementsToIdentify() {
+		return rundeckConfiguration.getElementsToIdentify();
 	}
 
 	public ResponseEntity<Joblist> getProjectById(String projectId) {

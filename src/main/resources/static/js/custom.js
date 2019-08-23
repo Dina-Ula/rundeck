@@ -5,6 +5,7 @@ $(document).ready(function() {
 	    disableAddBlock();
 	    disableRemoveBlock();
 	    disableModifyBlock();
+	    disableRegexBlock();
 	    
 	    var num_of_options = $('.ecx_reorder_option').length;
 	    var new_option = reorder_options_template.replace(/#/g, num_of_options + 1);
@@ -18,6 +19,7 @@ $(document).ready(function() {
     	    disableReorderBlock();
     	    disableRemoveBlock();
     	    disableModifyBlock();
+    	    disableRegexBlock();
     	    $("#selection_holder").css("display","block");
 	}
     	
@@ -25,6 +27,7 @@ $(document).ready(function() {
     	    disableReorderBlock();
     	    disableAddBlock();
     	    disableModifyBlock();
+    	    disableRegexBlock();
     	    $("#selection_holder").css("display","block");
     	}
     	
@@ -32,6 +35,7 @@ $(document).ready(function() {
     	    disableReorderBlock();
     	    disableAddBlock();
     	    disableRemoveBlock();
+    	    disableRegexBlock();
     	    $("#selection_holder").css("display","block");
     	}
     });
@@ -108,6 +112,18 @@ $(document).ready(function() {
 	$('#update_target_value').attr('name', updatedName);
     });
     //End - Modify Block
+    
+    //Start - Regex Block
+    function disableRegexBlock () {
+	$("#regex_select").empty();
+	$("#regex_element_holder").css("display","none");
+    }
+    $(document).on('change', '.ecx_regex_select', function() {
+	var selectedOption = $(this).find('option:selected').text();
+	var updatedName = $("#regex_value").attr('name') + selectedOption
+	$('#regex_value').attr('name', updatedName);
+    });
+    //End - Regex Block
 	
     $(document).on('change', '.ecx_dynamic_select', function() {
 	
@@ -121,6 +137,8 @@ $(document).ready(function() {
 	    
 	    $("#add_element_holder").empty().css("display","none");
 	    $("#ecx_submit").css("display","none");
+	    
+	    disableRegexBlock();
 	    
 	    var selectedOption = $(this).find('option:selected').text();
 	    var url = "/project/job/attributes/add/" + selectedOption;
@@ -145,6 +163,15 @@ $(document).ready(function() {
 			var new_input = add_element_template.replace(/#/g, value);
 			$("#add_element_holder").append(new_input);
 		    });
+		    $.each(data["regexAttributes"], function(index, value) {
+			$("#regex_element_holder").css("display","block");
+			if (index == 0) {
+			    $("#regex_select").append(options_empty_template);
+			}
+			
+			var new_option = options_template.replace(/attribute/g, value);
+			$("#regex_select").append(new_option);
+		    });
 		}
 	    });
 	}
@@ -159,6 +186,8 @@ $(document).ready(function() {
 	    
 	    $("#remove_element_holder").empty().css("display","none");
 	    $("#ecx_submit").css("display","none");
+	    
+	    disableRegexBlock();
 	    
 	    var selectedOption = $(this).find('option:selected').text();
 	    var url = "/project/job/attributes/remove/" + selectedOption;
@@ -183,6 +212,15 @@ $(document).ready(function() {
 			var new_input = remove_element_template.replace(/#/g, value);
 			$("#remove_element_holder").append(new_input);
 		    });
+		    $.each(data["regexAttributes"], function(index, value) {
+			$("#regex_element_holder").css("display","block");
+			if (index == 0) {
+			    $("#regex_select").append(options_empty_template);
+			}
+			
+			var new_option = options_template.replace(/attribute/g, value);
+			$("#regex_select").append(new_option);
+		    });
 		}
 	    });
 	}
@@ -199,6 +237,8 @@ $(document).ready(function() {
 	    $("#update_target_select").empty();
 	    $("#update_element_holder").css("display","none");
 	    $("#ecx_submit").css("display","none");
+	    
+	    disableRegexBlock();
 	    
 	    var selectedOption = $(this).find('option:selected').text();
 	    var url = "/project/job/attributes/update/" + selectedOption;
@@ -235,6 +275,15 @@ $(document).ready(function() {
 			
 			$("#update_element_holder").css("display","block");
 			$("#ecx_submit").css("display","block");
+		    });
+		    $.each(data["regexAttributes"], function(index, value) {
+			$("#regex_element_holder").css("display","block");
+			if (index == 0) {
+			    $("#regex_select").append(options_empty_template);
+			}
+			
+			var new_option = options_template.replace(/attribute/g, value);
+			$("#regex_select").append(new_option);
 		    });
 		}
 	    });

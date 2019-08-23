@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import com.hbg.rundeck.constants.RundeckConstants;
 import com.hbg.rundeck.job.Joblist;
 import com.hbg.rundeck.operation.Operation;
 import com.hbg.rundeck.project.model.Project;
@@ -29,6 +30,8 @@ import com.hbg.rundeck.service.JobService;
  */
 @Component
 public class JobFacade {
+
+	private static final String JOB = "job";
 
 	@Autowired
 	private JobService service;
@@ -64,17 +67,22 @@ public class JobFacade {
 		return elements.get(name);
 	}
 
-	public List<String> getAllElementsToIdentifyByName(String name) {
-		Map<String, List<String>> elements = service.getAllElementsToIdentify();
-		return elements.get(name);
-	}
-
 	public List<String> getAllElementsToUpdateByName(String name) {
 		Map<String, List<String>> elements = service.getAllElementsToUpdate();
 		return elements.get(name);
 	}
 
-	public void editJobByProjectId(final Map<String, String> requestBody, String projectId) {
+	public List<String> getAllElementsToIgnore() {
+		Map<String, List<String>> elements = service.getAllElementsToIgnore();
+		return elements.get(JOB);
+	}
+
+	public List<String> getAllElementsToIdentifyByName(String name) {
+		Map<String, List<String>> elements = service.getAllElementsToIdentify();
+		return elements.get(name);
+	}
+
+	public String editJobByProjectId(final Map<String, String> requestBody, String projectId) {
 
 		Joblist jobList = service.getProjectById(projectId).getBody();
 
@@ -83,7 +91,7 @@ public class JobFacade {
 		Joblist modifiedJoblist = operation.process(projectId, requestBody);
 
 		if (modifiedJoblist == null) {
-			return;
+			return RundeckConstants.FAILED;
 		}
 
 		ResponseEntity<Result> result = service.editProjectById(modifiedJoblist, projectId);
@@ -92,11 +100,14 @@ public class JobFacade {
 		Failed failed = result.getBody().getFailed();
 		List<com.hbg.rundeck.result.Result.Failed.Job> failedJobs = failed.getJob();
 		if (!CollectionUtils.isEmpty(failedJobs)) {
-
 			System.out.println("The modified job import failed. Hence, the previous version is reloaded!");
 			result = service.editProjectById(jobList, projectId);
 			printResult(result);
+
+			return RundeckConstants.FAILED;
 		}
+
+		return RundeckConstants.SUCCESS;
 	}
 
 	private void printResult(ResponseEntity<Result> result) {

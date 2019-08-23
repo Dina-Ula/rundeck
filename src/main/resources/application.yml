@@ -26,6 +26,11 @@ rundeck:
    elementsToIdentify:
       job: id
       option: name
+   elementsToIgnore:
+      job:
+      - id
+      - name
+      - group
    elementsToUpdate:
       job:
       - id

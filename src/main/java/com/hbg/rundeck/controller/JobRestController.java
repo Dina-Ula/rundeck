@@ -25,6 +25,7 @@ public class JobRestController {
 
 	private static final String ALL_ATTRIBUTES = "allAttributes";
 	private static final String ADD_ATTRIBUTES = "addAttributes";
+	private static final String REGEX_ATTRIBUTES = "regexAttributes";
 
 	private static final String ID_ATTRIBUTES = "idAttributes";
 	private static final String TARGET_ATTRIBUTES = "targetAttributes";
@@ -43,6 +44,7 @@ public class JobRestController {
 	public ResponseEntity<Map<String, List<String>>> getAddElementsByName(@PathVariable String name) {
 		Map<String, List<String>> elements = new HashMap<String, List<String>>();
 
+		elements.put(REGEX_ATTRIBUTES, facade.getAllElementsToIgnore());
 		elements.put(ALL_ATTRIBUTES, facade.getAllElementsByName(name));
 		elements.put(ADD_ATTRIBUTES, facade.getElementsToAddByName(name));
 
@@ -53,6 +55,7 @@ public class JobRestController {
 	public ResponseEntity<Map<String, List<String>>> getRemoveElementsByName(@PathVariable String name) {
 		Map<String, List<String>> elements = new HashMap<String, List<String>>();
 
+		elements.put(REGEX_ATTRIBUTES, facade.getAllElementsToIgnore());
 		elements.put(ALL_ATTRIBUTES, facade.getAllElementsByName(name));
 		elements.put(ADD_ATTRIBUTES, facade.getElementsToRemoveByName(name));
 
@@ -63,6 +66,7 @@ public class JobRestController {
 	public ResponseEntity<Map<String, List<String>>> getElementsToUpdateByName(@PathVariable String name) {
 		Map<String, List<String>> elements = new HashMap<String, List<String>>();
 
+		elements.put(REGEX_ATTRIBUTES, facade.getAllElementsToIgnore());
 		elements.put(ALL_ATTRIBUTES, facade.getAllElementsByName(name));
 		elements.put(ID_ATTRIBUTES, facade.getAllElementsToIdentifyByName(name));
 		elements.put(TARGET_ATTRIBUTES, facade.getAllElementsToUpdateByName(name));

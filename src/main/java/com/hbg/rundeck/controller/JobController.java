@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hbg.rundeck.constants.RundeckConstants;
 import com.hbg.rundeck.facade.JobFacade;
 import com.hbg.rundeck.project.model.Project;
 
@@ -45,9 +47,15 @@ public class JobController {
 	}
 
 	@PostMapping("/project/{projectId}")
-	public String editProject(@PathVariable String projectId, @RequestParam final Map<String, String> requestBody) {
-		
-		facade.editJobByProjectId(requestBody, projectId);
+	public String editProject(@PathVariable String projectId, @RequestParam final Map<String, String> requestBody,
+			RedirectAttributes redirectAttributes) {
+
+		String status = facade.editJobByProjectId(requestBody, projectId);
+
+		if (RundeckConstants.FAILED.equals(status)) {
+			redirectAttributes.addFlashAttribute(RundeckConstants.STATUS, RundeckConstants.SOMETHING_WENT_WRONG);
+			return "redirect:/project/" + projectId;
+		}
 
 		return "redirect:/success";
 	}
