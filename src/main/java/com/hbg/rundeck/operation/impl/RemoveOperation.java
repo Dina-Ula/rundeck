@@ -84,21 +84,22 @@ public class RemoveOperation implements Operation {
 		List<Job> jobs = joblist.getJob();
 		for (Job job : jobs) {
 			try {
-				String elementValue = operationHelper.getElementValueAsString(job, regexElementId);
 
-				boolean matches = elementValue.matches(regex);
-
-				if (matches) {
+				if (operationHelper.ignoreJob(job, regexElementId, regex)) {
 					System.out.println("Ignoring: Job Id: " + job.getId() + "Job Name: " + job.getName());
 					continue;
 				}
 
-				Object element = job;
+				Object elementToModify = job;
 				if (!CollectionUtils.isEmpty(selectedElements)) {
-					element = operationHelper.getElement(job, selectedElements);
+
+					elementToModify = operationHelper.getElement(job, selectedElements);
+					if (elementToModify == null) {
+						continue;
+					}
 				}
 
-				removeElement(element, removeElement);
+				removeElement(elementToModify, removeElement);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 					| NoSuchMethodException | SecurityException e) {
 

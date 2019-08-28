@@ -87,27 +87,32 @@ public class AddOperation implements Operation {
 		List<Job> jobs = joblist.getJob();
 		for (Job job : jobs) {
 			try {
-				String elementValue = operationHelper.getElementValueAsString(job, regexElementId);
-
-				boolean matches = elementValue.matches(regex);
-
-				if (matches) {
+				
+				if (operationHelper.ignoreJob(job, regexElementId, regex)) {
 					System.out.println("Ignoring: Job Id: " + job.getId() + "Job Name: " + job.getName());
 					continue;
 				}
 
 				Object elementToModify = job;
 				if (!CollectionUtils.isEmpty(selectedElements)) {
+
 					elementToModify = operationHelper.getElement(job, selectedElements);
+					if (elementToModify == null) {
+						continue;
+					}
 				}
 
 				System.out.println("Adding a new element to the job, " + job.getId());
+
 				addElement(elementToModify, addElements);
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-					| NoSuchMethodException | SecurityException | InstantiationException e) {
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException
+					| InstantiationException e) {
 				System.out.println("The element failed to add for the job, " + job.getName());
 				e.printStackTrace();
 				return null;
+			} catch (NoSuchMethodException e) {
+				System.out.println("The element failed to add for the job, " + job.getName());
+				e.printStackTrace();
 			}
 		}
 

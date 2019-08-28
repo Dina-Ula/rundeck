@@ -3,6 +3,10 @@ plugins {
 	id 'java'
 }
 
+bootJar {
+    mainClassName = 'com.hbg.rundeck.RundeckApplication'
+}
+
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.hbg'

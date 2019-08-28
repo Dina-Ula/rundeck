@@ -23,6 +23,11 @@ public class OperationHelper {
 	public Object getElement(Object element, List<String> pSelectedElements) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		for (String entry : pSelectedElements) {
+
+			if (element == null) {
+				return null;
+			}
+
 			element = element.getClass().getMethod(GET + StringUtils.capitalize(entry)).invoke(element);
 		}
 
@@ -54,5 +59,17 @@ public class OperationHelper {
 		String value = (String) element.getClass().getMethod(GET + StringUtils.capitalize(id)).invoke(element);
 
 		return value;
+	}
+
+	public boolean ignoreJob(Object element, String elementId, String regex) throws IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+
+		if (StringUtils.isEmpty(elementId)) {
+			return Boolean.FALSE;
+		}
+
+		String elementValue = getElementValueAsString(element, elementId);
+
+		return elementValue.matches(regex);
 	}
 }
